@@ -1,5 +1,9 @@
 package com.company;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -60,10 +64,14 @@ public class Main {
             }
         }
 
-        System.out.println("Execution time: " + totalTime + " ms.");
-        System.out.println("Total number of primes: " + totalNumPrimes);
-        System.out.println("Top 10 primes: " + sb.toString());
-        System.out.println("Sum of all primes: " + sumOfAllPrimes);
+        try (BufferedWriter fileWriter = new BufferedWriter(new FileWriter(new File("primes.txt")))) {
+            fileWriter.write("Execution time: " + totalTime + " ms.\n");
+            fileWriter.write("Total number of primes: " + totalNumPrimes + "\n");
+            fileWriter.write("Top 10 primes: " + sb.toString() + "\n");
+            fileWriter.write("Sum of all primes: " + sumOfAllPrimes + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 
